@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body { font-family: Arial; background: #f5f7ff; margin: 0; }
+        .top {
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color: white; padding: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .grid {
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            background: white; padding: 20px; border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .moods button {
+            margin: 6px; padding: 10px 14px; border-radius: 20px;
+            border: none; cursor: pointer; font-size: 14px;
+        }
+        .tired{background:#dbeafe;} .sad{background:#fee2e2;}
+        .okay{background:#e5e7eb;} .happy{background:#dcfce7;}
+        .motivated{background:#fef3c7;}
+        .badges span{
+            display:inline-block; background:#eef2ff; padding:6px 10px;
+            border-radius:12px; margin:4px; font-size:12px;
+        }
+        .goal-box input{
+            width:80%; padding:8px; border-radius:8px; border:1px solid #ccc;
+        }
+        .goal-box button{
+            padding:8px 12px; border:none; border-radius:8px;
+            background:#4f46e5; color:white; cursor:pointer;
+        }
+        a { color:white; text-decoration:none; margin-left:12px; }
+    </style>
+</head>
+<body>
+
+<div class="top">
+    <div>
+        <strong>Hi, {{ username }} 👋</strong><br>
+        <small>{{ tip }}</small>
+    </div>
+    <div>
+        <a href="/summary">Weekly Report</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h3>How do you feel today?</h3>
+        <form method="post" class="moods">
+            <button name="mood" value="tired" class="tired">😴 Tired</button>
+            <button name="mood" value="sad" class="sad">😞 Sad</button>
+            <button name="mood" value="okay" class="okay">🙂 Okay</button>
+            <button name="mood" value="happy" class="happy">😄 Happy</button>
+            <button name="mood" value="motivated" class="motivated">🔥 Motivated</button>
+        </form>
+
+        {% if plan %}
+        <h4>Your Plan</h4>
+        <ul>
+            {% for p in plan %}
+            <li>{{ p }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <hr>
+        <div class="goal-box">
+            <h4>Your Goal</h4>
+            <form method="post">
+                <input type="text" name="goal" placeholder="Set your study goal" value="{{ goal or '' }}">
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Your Progress</h3>
+        <p>🔥 Streak: {{ streak }} days</p>
+
+        {% if badges %}
+        <div class="badges">
+            <h4>Badges</h4>
+            {% for b in badges %}
+            <span>{{ b }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <h4>Recent Moods</h4>
+        <ul>
+            {% for m, d in past %}
+            <li>{{ d }} – {{ m }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

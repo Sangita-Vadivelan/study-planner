@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weekly Report</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7ff;
+            margin: 0;
+            padding: 0;
+        }
+        .top {
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container {
+            padding: 30px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .stat {
+            background: #eef2ff;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top">
+    <div><strong>Weekly Report</strong></div>
+    <div>
+        <a href="/">Back to Dashboard</a>
+    </div>
+</div>
+
+<div class="container">
+    {% if empty %}
+        <div class="card">
+            <h3>No data yet</h3>
+            <p>Start using the planner to see your weekly insights.</p>
+        </div>
+    {% else %}
+        <div class="card stats">
+            <div class="stat">
+                <h4>Average Mood</h4>
+                <p>{{ avg }}</p>
+            </div>
+            <div class="stat">
+                <h4>Best Day Score</h4>
+                <p>{{ best }}</p>
+            </div>
+            <div class="stat">
+                <h4>Lowest Day Score</h4>
+                <p>{{ worst }}</p>
+            </div>
+            <div class="stat">
+                <h4>Total Plans</h4>
+                <p>{{ total }}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Last 7 Entries</h3>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Mood</th>
+                    <th>Score</th>
+                </tr>
+                {% for mood, score, date in data %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ mood }}</td>
+                    <td>{{ score }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7ff;
+            margin: 0;
+        }
+        .top {
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            padding: 30px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        a {
+            text-decoration: none;
+            color: #4f46e5;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top">
+    <div><strong>Admin Panel</strong></div>
+    <div><a href="/" style="color:white;">Back</a></div>
+</div>
+
+<div class="container">
+    <h3>Registered Users</h3>
+
+    {% if users %}
+        {% for uid, uname in users %}
+        <div class="card">
+            <a href="/admin/user/{{ uid }}">{{ uname }}</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

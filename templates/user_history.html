@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User History</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7ff;
+            margin: 0;
+        }
+        .top {
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 30px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top">
+    <div><strong>User History – {{ username }}</strong></div>
+    <div><a href="/admin">Back to Admin</a></div>
+</div>
+
+<div class="container">
+    {% if history %}
+        <div class="card">
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Mood</th>
+                    <th>Score</th>
+                    <th>Plan</th>
+                </tr>
+                {% for mood, score, plan, date in history %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ mood }}</td>
+                    <td>{{ score }}</td>
+                    <td>{{ plan }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <div class="card">
+            <p>No history available for this user.</p>
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
