@@ -165,6 +165,42 @@ def home():
         streak=streak
     )
 
+def get_week_data(user_id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("""
+        SELECT mood, score, date FROM history
+        WHERE user_id=? ORDER BY id DESC LIMIT 7
+    """, (user_id,))
+    rows = cur.fetchall()
+    con.close()
+    return rows
+
+
+@app.route("/summary")
+def summary():
+    if "user_id" not in session:
+        return redirect("/login")
+
+    data = get_week_data(session["user_id"])
+    if not data:
+        return render_template("summary.html", empty=True)
+
+    scores = [d[1] for d in data]
+
+    avg = round(sum(scores) / len(scores), 2)
+    best = max(scores)
+    worst = min(scores)
+
+    return render_template(
+        "summary.html",
+        avg=avg,
+        best=best,
+        worst=worst,
+        total=len(scores),
+        data=data
+    )
+
 # -------- ADMIN ROUTES --------
 
 @app.route("/admin")
